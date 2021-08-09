@@ -7,12 +7,72 @@
     <title>Document</title>
     <script src="scripts/indexdb.js"></script>
     <script>
+
+        function loadContacts(){
+
+            var tx = db.transaction(["Contacts"], "readonly");
+            var objectStore = tx.objectStore("Contacts");
+            var request = objectStore.openCursor();
+
+            var tbody = document.getElementById("tbody");
+            request.onsuccess = function(evt){
+
+                var cursor = evt.target.result;
+                if(cursor){
+                    //console.log("cursor", cursor);
+
+                    var tr = document.createElement("tr");
+                    
+                    var idTd = document.createElement("td");
+                    var idText = document.createTextNode(cursor.value.id);
+                    idTd.appendChild(idText);
+                    tr.appendChild(idTd);
+
+                    var nameTd = document.createElement("td");
+                    var nameText = document.createTextNode(cursor.value.name);
+                    nameTd.appendChild(nameText);
+                    tr.appendChild(nameTd);
+
+                    var emailTd = document.createElement("td");
+                    var emailText = document.createTextNode(cursor.value.email);
+                    emailTd.appendChild(emailText);
+                    tr.appendChild(emailTd);
+
+                    tbody.appendChild(tr);
+
+                    cursor.continue();
+                }
+                
+            }
+        }
+
         function save(){
           
+            var contact = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+            }
+
+            //open a transaction
+            var tx = db.transaction(["Contacts"], "readwrite");
+            var objectStore = tx.objectStore("Contacts");
+            var req = objectStore.add(contact);
+            req.onsuccess = function(){
+                alert("Saved");
+                document.getElementById("name").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("password").value = "";
+
+            }
+            req.onerror = function(){
+                
+            }
+
         }
     </script>
 </head>
-<body>
+<body onload="loadContacts();">
     <header>
         <h2>Contacts</h2>
     </header>
@@ -41,6 +101,23 @@
                 </div>
             </fieldset>
         </form>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <!-- <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr> -->
+            </tbody>
+        </table>
     </main>
 
 

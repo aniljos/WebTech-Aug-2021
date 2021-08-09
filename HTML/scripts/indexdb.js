@@ -14,7 +14,8 @@ if(window.indexedDB){
     openRequest.onupgradeneeded = function(evt){
         console.log("onupgradeneeded");
         var db = evt.target.result;
-        db.createObjectStore("Contacts", {keyPath: "id", autoIncrement: true});
+        var objectStore = db.createObjectStore("Contacts", {keyPath: "id", autoIncrement: true});
+        //objectStore.createIndex("name")
     }
 }
 else{

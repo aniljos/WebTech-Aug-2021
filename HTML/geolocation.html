@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var geolocation = window.navigator.geolocation;
+        geolocation.getCurrentPosition(onSuccess, onError, {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 60000
+        });;
+
+
+        function onSuccess(position){
+            console.log("Position: ", position);
+
+            document.getElementById("latitudeSpan").innerHTML = position.coords.latitude;
+            document.getElementById("longitudeSpan").innerHTML = position.coords.longitude;
+        }
+        function onError(error){
+            console.log("error: ", error);
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h2>Geolocation</h2>
+    </header>
+    <main>
+        <div id="positionPanel">
+            <p>Latitude: <span id="latitudeSpan"></span></p>
+            <p>Longitude: <span id="longitudeSpan"></span></p>
+        </div>
+    </main>
+</body>
+</html>
