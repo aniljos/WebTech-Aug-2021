@@ -1,6 +1,7 @@
 
 body{
     font-family: 'Montserrat', sans-serif;
+    height: 1500px;
 }
 
 #mainSection{
@@ -31,6 +32,50 @@ section{
     color: rgb(0, 255, 21);
     margin: 7px;
 }
+.header-title{
+    display: inline-block;
+    padding: .2em;
+    margin: .2em;
+}
+.header-title > a{
+    text-decoration: none;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+.main-header{
+    background-color: rgb(31, 27, 27);
+    width: 100%;
+    position: fixed;
+    top: 0;
+   
+}
+.main-nav{
+    display: inline-block;
+    text-align: right;
+    width: calc(100% - 80px);
+    /* visibility: hidden; */
+}
+.nav-items{
+    display: inline-block;
+}
+.nav-item{
+    list-style: none;
+    display: inline-block;
+    /* background-color: rgb(212, 203, 190); */
+}
+.nav-item > a {
+    text-decoration: none;
+}
+
+.nav-item > a:hover{
+    color: white;
+}
+
+main{
+    margin-top: 96px;
+}
+
+
 
 
 
