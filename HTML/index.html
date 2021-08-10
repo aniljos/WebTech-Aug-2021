@@ -1,37 +1,94 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Sample</title>
-    </head>
-    <body>
 
-        <header>
-            <h2>The Sample HTML Application</h2>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="contacts.html">Contacts</a>
-                    </li>
-                    <li>
-                        <a href="blogs.html">Posts</a>
-                    </li>
-                    <li>
-                        <a href="contactsDB.html">Indexed DB</a>
-                    </li>
-                    <li>
-                        <a href="geolocation.html">Geolocation</a>
-                    </li>
-                    <li>
-                        <a href="media.html">Media</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <h3>The Main Content</h3>
-        </main>
-        <footer>
-            All rights reserved 2021.
-        </footer>
-    </body>
+<head>
+    <title>Sample</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!-- <style>
+
+        /* CSS Rule */
+        section{
+            color: blue;
+            background-color: aliceblue;
+            height: 300px;
+        }
+
+    </style> -->
+
+    <script>
+        function load() {
+            var anchorList = document.getElementsByClassName("main-nav-item-a-client");
+            var array = Array.from(anchorList);
+
+            array.forEach(function (element) {
+
+                element.addEventListener("click", async function (e) {
+
+                    e.preventDefault();
+                    console.log("clicked");
+                    try {
+                        var response = await fetch(element.href);
+                        var html = await response.text();
+                        document.getElementById("mainSection").innerHTML = html;
+
+                    } catch (error) {
+                        alert("failed to navigate");
+                    }
+
+                }, false);
+            })
+
+        }
+    </script>
+</head>
+
+<body onload="load()">
+
+    <header>
+        <h2>The Sample HTML Application</h2>
+        <nav>
+            <ul>
+                <li>
+                    <a href="contacts.html">Contacts</a>
+                </li>
+                <li>
+                    <a href="blogs.html">Posts</a>
+                </li>
+                <li>
+                    <a href="contactsDB.html">Indexed DB</a>
+                </li>
+                <li>
+                    <a href="geolocation.html">Geolocation</a>
+                </li>
+                <li>
+                    <a href="media.html">Media</a>
+                </li>
+                <li>
+                    <a class="main-nav-item-a-client" href="pages/flexbox.html">Flexbox</a>
+                </li>
+                <li>
+                    <a class="main-nav-item-a-client" href="pages/responsive.html">Responsive</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h3>The Main Content</h3>
+        <!-- <section style="color: blue; background-color: aliceblue; height: 300px;" id="mainSection">
+
+        </section> -->
+        <section  class="mainSection1 mainSection2" id="mainSection">
+
+        </section>
+    </main>
+    <footer>
+        All rights reserved 2021.
+    </footer>
+</body>
+
 </html>

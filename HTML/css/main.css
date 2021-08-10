@@ -1,0 +1,36 @@
+
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+
+#mainSection{
+
+    /* color: white; */
+    padding: 7px;
+}
+section{
+    color: blue;
+    background-color: rgb(42, 45, 48);
+    height: 300px;
+    
+}
+
+.main-nav-item-a-client{
+
+    color: blueviolet;
+    font-weight: bold;
+}
+
+.mainSection2{
+
+    color: rgb(255, 0, 119);
+    margin: 7px;
+}
+.mainSection1{
+
+    color: rgb(0, 255, 21);
+    margin: 7px;
+}
+
+
+
