@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sockets</title>
+    <script>
+        var socket;
+        function connect(){
+
+            var urlInput  = document.getElementById("urlInput");
+            if(urlInput.value){
+                socket = new WebSocket(urlInput.value);
+                socket.addEventListener("open", function(){
+                    console.log("Opened");
+                }, false);
+                socket.addEventListener("close", function(){
+                    console.log("close");
+                }, false);
+                socket.addEventListener("error", function(){
+                    console.log("error");
+                }, false);
+                socket.addEventListener("message", function(message){
+                    console.log("message", message);
+
+                    var para = document.createElement("p");
+                    var textEl = document.createTextNode(message.data);
+                    para.appendChild(textEl);
+                    document.getElementById("messages").appendChild(para);
+
+                }, false);
+            }
+            else{
+                alert("Please enter the URL");
+            }
+            
+        }
+
+        function send(){
+
+            var sendInput = document.getElementById("sendInput");
+            socket.send(sendInput.value);
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h3>Web Sockets</h3>
+    </header>
+
+    <main>
+        <div>
+            <input type="text" id="urlInput" value="wss://echo.websocket.org">&nbsp;
+            <button onclick="connect();">Connect</button>
+        </div>
+        <br/>
+
+        <div id="messages">
+
+        </div>
+
+        <div>
+            <input type="text" id="sendInput">&nbsp;
+            <button onclick="send();">Send</button>
+        </div>
+    </main>
+</body>
+
+</html>

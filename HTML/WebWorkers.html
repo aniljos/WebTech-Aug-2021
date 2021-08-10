@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function start() {
+
+            //loads the worker
+            var worker = new Worker("scripts/task.js");
+            //register for the message event
+            worker.addEventListener("message", function(message){
+                alert(message.data);
+            });
+            // send a message to the worker
+            worker.postMessage("startTask");
+           // alert("Task done")
+
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h2>Web Workers</h2>
+    </header>
+    <main>
+        <div>
+            Message: <input />
+        </div>
+        <div>
+            <button onclick="start()">Start</button>
+        </div>
+    </main>
+</body>
+
+</html>
