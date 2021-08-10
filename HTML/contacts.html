@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,41 +8,41 @@
     <title>Document</title>
     <script>
 
-        window.addEventListener("storage", function(evt){
+        window.addEventListener("storage", function (evt) {
             console.log("storage", evt);
-            
+
         }, false);
 
 
-        function save(){
-           // alert("saving...");
+        function save() {
+            // alert("saving...");
             var nameEl = document.getElementById("name");
             var emailEl = document.getElementById("email");
             var passwordEl = document.getElementById("password");
 
-            nameEl.addEventListener("invalid", function(){
+            nameEl.addEventListener("invalid", function () {
                 console.log("invalid event validity", nameEl.validity);
-                if(nameEl.validity.valueMissing === true){
+                if (nameEl.validity.valueMissing === true) {
                     document.getElementById("nameMessage").innerHTML = "The field is required."
                 }
-                else if(nameEl.validity.tooShort === true){
+                else if (nameEl.validity.tooShort === true) {
                     document.getElementById("nameMessage").innerHTML = "The field is too short(3 chars mins)."
                 }
-                else{
+                else {
                     document.getElementById("nameMessage").innerHTML = "Invalid value."
                 }
 
             }, false);
 
             var nameValidity = nameEl.checkValidity()
-            if(nameValidity){
+            if (nameValidity) {
                 document.getElementById("nameMessage").style.display = "none";
             }
-            else{
+            else {
                 document.getElementById("nameMessage").style.display = "block";
             }
 
-            if(nameValidity && emailEl.checkValidity() && passwordEl.checkValidity()){
+            if (nameValidity && emailEl.checkValidity() && passwordEl.checkValidity()) {
 
                 var storage = window.localStorage;
                 //var storage = window.sessionStorage;
@@ -52,62 +53,75 @@
 
                 var contacts = [];
                 var currentContacts = storage.getItem("contacts");
-                if(currentContacts){
+                if (currentContacts) {
                     contacts = JSON.parse(currentContacts);
                 }
-                
+
                 contacts.push(contact);
 
                 storage.setItem("contacts", JSON.stringify(contacts));
-                alert("Saved");
+                //alert("Saved");
+                var notification = new Notification("Mesage", {body: "Record Saved", icon: ""});
 
                 nameEl.value = "";
-                emailEl.value= "";
+                emailEl.value = "";
                 passwordEl.value = "";
 
             }
 
+
+
+
+        }
+
+        function enable() {
+            Notification.requestPermission()
+                .then(function (result) {
+                    console.log("requestPermission: ", result);
+                });
         }
     </script>
 
     <style>
-        input:valid{
+        input:valid {
             border-left: 5px solid green;
         }
 
-        input:invalid{
+        input:invalid {
             border-left: 5px solid red;
         }
     </style>
 
-}
 
-    </style>
 </head>
+
 <body>
     <header>
         <h2>Contacts</h2>
     </header>
     <main>
 
+        <div>
+            <button onclick="enable()">Enable Notifications</button>
+        </div>
         <form>
             <fieldset>
                 <div>
                     <p><label for="name">Name</label></p>
-                    <input id="name" placeholder="Name" required minlength="3" autofocus/>
+                    <input id="name" placeholder="Name" required minlength="3" autofocus />
                     <span style="display: none;" id="nameMessage">Invalid Value</span>
                 </div>
-                
+
                 <div>
                     <p><label for="email">Email</label></p>
-                    <input id="email" type="email" placeholder="Email" required/>
+                    <input id="email" type="email" placeholder="Email" required />
                 </div>
-                
+
                 <div>
                     <p><label for="password">Password</label></p>
-                    <input id="password" type="password" placeholder="Password" pattern="[a-zA-Z]{4,}"/>
+                    <input id="password" type="password" placeholder="Password" pattern="[a-zA-Z]{4,}" />
                 </div>
-                <br/>
+                <br />
                 <div>
                     <button type="button" onclick="save()">Save</button>
                 </div>
@@ -117,4 +131,5 @@
 
 
 </body>
+
 </html>
