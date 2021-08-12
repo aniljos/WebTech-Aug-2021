@@ -7,7 +7,7 @@ if (isMainThread) {
     const arr = new Int32Array(arrayBuffer);
 
     //split the task to multiple unit(chunks);
-    const chunkSize = 8; //No of core(cpu) os.cpus().length
+    const chunkSize = 4; //No of core(cpu) os.cpus().length
     const numberofElementsPerChunk = elementCount / chunkSize;
     const chunks = [];
 

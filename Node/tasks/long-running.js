@@ -12,6 +12,6 @@ for (let i = 0; i < elementCount; i++) {
 console.timeEnd("task");
 console.log(arr);
 
-// for (let i = 0; i < 3; i++) {
-//     setTimeout(() => {console.log("Timeout ", i)}, i * 1000);
-// }
+for (let i = 0; i < 3; i++) {
+    setTimeout(() => {console.log("Timeout ", i)}, i * 1000);
+}

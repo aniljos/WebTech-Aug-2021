@@ -252,5 +252,5 @@ app.get("/fetchMedia", (req, resp) => {
 //Open an HTTP Listener
 const port = 9000;
 app.listen(9000, () => {
-    console.log("Node application running at port " + port);
+    console.log("Node application running at port " + port + " process: ", process.pid);
 })
