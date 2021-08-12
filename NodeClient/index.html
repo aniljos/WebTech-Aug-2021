@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        async function fetchData(){
+
+            try {
+                
+                var url = "http://localhost:9000/products";
+                const resp = await fetch(url);
+                const data = await resp.json();
+                console.log("data", data);
+
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+
+        async function saveData(){
+            try {
+                
+                const product = {id: 10, name: "Samsung Galaxy", 
+                                description: "Smart Mobile Device", price: 30000}
+
+                var url = "http://localhost:9000/products";
+                const resp = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(product),
+                    headers: {"content-type":  "application/json"}
+                });
+                console.log("status: ", resp.status);
+
+
+            } catch (error) {
+                console.log("error: ", error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Node Client</h2>
+
+    <div>
+        <button onclick="fetchData()">Fetch</button>
+    </div>
+
+    <div>
+        <button onclick="saveData()">Save</button>
+    </div>
+</body>
+</html>
