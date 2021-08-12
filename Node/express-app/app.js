@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 
 //creates the Node Express Application
 const app = express();
@@ -163,6 +164,37 @@ app.post("/products", (reqeust, response) => {
         response.end();
     }
 });
+
+app.get("/task", (req, response) => {
+
+
+    setImmediate(function(){
+
+        for (let i = 0; i < 5_000_000_000; i++) {
+           
+        }
+    
+        response.writeHead("200", { "content-type": "text/html" });
+        response.write("<html>");
+        response.write("<head></head>");
+        response.write("<body>");
+        response.write("<h2>Task Completed</h2>");
+        response.write("</body>");
+        response.write("</html>");
+        response.end();
+
+    })
+
+
+})
+
+app.get("/fetchMedia", (req, resp) => {
+
+    resp.setHeader("content-type","video/mp4");
+    var stream = fs.createReadStream("D:\\temp\\video2.mp4");
+    stream.pipe(resp);
+
+})
 
 
 
