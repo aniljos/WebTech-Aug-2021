@@ -1,5 +1,9 @@
 const express = require('express');
 const fs = require('fs');
+const cp = require("child_process");
+const {Worker} = require("worker_threads");
+
+
 
 //creates the Node Express Application
 const app = express();
@@ -168,25 +172,72 @@ app.post("/products", (reqeust, response) => {
 app.get("/task", (req, response) => {
 
 
-    setImmediate(function(){
+    console.log("Executing task ", process.pid);
+    const childTask 
+            = cp.fork(__dirname + "/task_child_process.js");
 
-        for (let i = 0; i < 5_000_000_000; i++) {
-           
+    childTask.send({command: "start"});
+
+    childTask.on("message", (result) => {
+
+        console.log("Executing task  result received ", process.pid);
+        if(result.status === "complete"){
+            response.writeHead("200", { "content-type": "text/html" });
+            response.write("<html>");
+            response.write("<head></head>");
+            response.write("<body>");
+            response.write("<h2>Task Completed</h2>");
+            response.write("</body>");
+            response.write("</html>");
+            response.end();
         }
+    });
     
-        response.writeHead("200", { "content-type": "text/html" });
-        response.write("<html>");
-        response.write("<head></head>");
-        response.write("<body>");
-        response.write("<h2>Task Completed</h2>");
-        response.write("</body>");
-        response.write("</html>");
-        response.end();
+    // setImmediate(function(){
 
-    })
+    //     for (let i = 0; i < 5_000_000_000; i++) {
+           
+    //     }
+    
+    //     response.writeHead("200", { "content-type": "text/html" });
+    //     response.write("<html>");
+    //     response.write("<head></head>");
+    //     response.write("<body>");
+    //     response.write("<h2>Task Completed</h2>");
+    //     response.write("</body>");
+    //     response.write("</html>");
+    //     response.end();
+
+    // })
 
 
 })
+
+app.get("/worker_demo", (req, response) => {
+
+    console.log("executing worker_demo", process.pid);
+    const worker = new Worker(__dirname + "/task_worker.js", {workerData: {data: "hello"}});
+
+    worker.on("message", function(result){
+
+        if(result.status === "complete"){
+            response.writeHead("200", { "content-type": "text/html" });
+            response.write("<html>");
+            response.write("<head></head>");
+            response.write("<body>");
+            response.write("<h2>Worker Task Completed</h2>");
+            response.write("</body>");
+            response.write("</html>");
+            response.end();
+        }
+    });
+
+    
+
+   
+
+
+});
 
 app.get("/fetchMedia", (req, resp) => {
 
